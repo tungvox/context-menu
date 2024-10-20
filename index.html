@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main-container">
+        <div class="tv-container">
+            <div class="tv-screen">
+                <canvas id="game-screen" aria-label="Snake game area" role="img"></canvas>
+            </div>
+            <button class="instruction-paper" aria-label="How to Play">How to</button>
+            <div class="fake-controller-container">
+                <div class="fake-controller">
+                    <img src="controller.PNG" alt="Controller">
+                </div>
+            </div>
+        </div>
+        <div class="tv-screen-bottom"></div>
+        
+        <!-- Add this new div for the popup -->
+        <div id="instruction-popup" class="popup">
+            <div class="popup-content">
+                <h2>How to Play Snake</h2>
+                <ol>
+                    <li>Pick up the controller with your right hand (right-click anywhere on the screen)</li>
+                    <li>You can drag the controller to a comfortable spot</li>
+                    <li>Press 'A' to start the game</li>
+                    <li>Use the D-pad to move the snake</li>
+                    <li>Eat the food (red apple) to grow longer</li>
+                    <li>Avoid hitting the walls, obstacles, or yourself</li>
+                    <li>Press 'B' to pause/resume the game</li>
+                    <li>Try to grow as long as possible without crashing!</li>
+                </ol>
+                <button id="close-popup">Close</button>
+            </div>
+        </div>
+        
+        <div class="controller">
+            <div class="controller-handle" aria-hidden="true">⋮⋮</div>
+            <div class="controller-content">
+                <div class="controller-left">
+                    <div class="d-pad" role="group" aria-label="Direction controls">
+                        <button class="d-pad-button up" onclick="up()" aria-label="Move up">▲</button>
+                        <button class="d-pad-button down" onclick="down()" aria-label="Move down">▼</button>
+                        <button class="d-pad-button left" onclick="left()" aria-label="Move left">◀</button>
+                        <button class="d-pad-button right" onclick="right()" aria-label="Move right">▶</button>
+                    </div>
+                </div>
+                <div class="controller-right">
+                    <div class="buttons" role="group" aria-label="Action buttons">
+                        <button class="action-button y" onclick="buttonY()" aria-label="Y button">Y</button>
+                        <button class="action-button b" onclick="buttonB()" aria-label="B button">B</button>
+                        <button class="action-button x" onclick="buttonX()" aria-label="X button">X</button>
+                        <button class="action-button a" onclick="buttonA()" aria-label="A button">A</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

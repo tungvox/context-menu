@@ -1,0 +1,570 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+h1 {
+    text-align: center;
+    color: white;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#game-screen {
+    width: 100%;
+    height: 100%;
+    display: block;
+    background-color: #000;
+}
+
+.tv-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #222;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.tv-screen {
+    width: 100%;
+    max-width: 760px;
+    margin: 0 auto;
+    background-color: #000;
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border: 20px solid #333;
+    border-radius: 15px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tv-screen::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, #444, #222);
+    z-index: -1;
+    border-radius: 20px;
+}
+
+.tv-screen-bottom {
+    height: 30px;
+    background-color: #333;
+    width: 200px;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    margin: -10px auto 0;
+    position: relative;
+    z-index: -1;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Controller styles remain the same */
+.game-menu {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.game-menu button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.game-menu button:hover {
+    background-color: #45a049;
+}
+
+.controller {
+    position: fixed;
+    background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+    border: 2px solid #505050;
+    border-radius: 20px;
+    padding: 5px;
+    z-index: 1000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255, 255, 255, 0.1);
+    width: 90%;
+    max-width: 400px;
+    height: auto;
+    display: none;
+    flex-direction: column;
+    user-select: none;
+}
+
+.controller.visible {
+    display: flex;
+}
+
+.controller-handle {
+    cursor: move;
+    text-align: center;
+    color: #888;
+    font-size: 20px;
+}
+
+.controller-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.controller-left, .controller-right {
+    width: 45%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.d-pad {
+    position: relative;
+    display: grid;
+    grid-template-areas:
+        ". up ."
+        "left . right"
+        ". down .";
+    gap: 5px;
+    background: linear-gradient(to bottom, #2a2a2a, #1a1a1a);
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+}
+
+.d-pad-button {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(to bottom, #4a4a4a, #3a3a3a);
+    border: 2px solid #505050;
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s ease;
+    border-radius: 5px;
+}
+
+.d-pad-button:active {
+    background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.d-pad-button.up { grid-area: up; }
+.d-pad-button.down { grid-area: down; }
+.d-pad-button.left { grid-area: left; }
+.d-pad-button.right { grid-area: right; }
+
+.buttons {
+    display: grid;
+    grid-template-areas:
+        ". y ."
+        "x . b"
+        ". a .";
+}
+
+.action-button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(to bottom, #4a4a4a, #3a3a3a);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.action-button:active {
+    transform: translateY(2px);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.action-button.y { 
+    grid-area: y;
+    background: linear-gradient(to bottom, #f0ad4e, #eea236); 
+}
+.action-button.b { 
+    grid-area: b;
+    background: linear-gradient(to bottom, #d9534f, #c9302c); 
+}
+.action-button.x { 
+    grid-area: x;
+    background: linear-gradient(to bottom, #5bc0de, #46b8da); 
+}
+.action-button.a { 
+    grid-area: a;
+    background: linear-gradient(to bottom, #5cb85c, #4cae4c); 
+}
+
+.action-button.y:active { background: linear-gradient(to bottom, #eea236, #f0ad4e); }
+.action-button.b:active { background: linear-gradient(to bottom, #c9302c, #d9534f); }
+.action-button.x:active { background: linear-gradient(to bottom, #46b8da, #5bc0de); }
+.action-button.a:active { background: linear-gradient(to bottom, #4cae4c, #5cb85c); }
+
+#main-container {
+    position: relative;
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .controller {
+        width: 95%;
+        max-width: 350px;
+    }
+
+    .controller-content {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .controller-left, .controller-right {
+        width: 100%;
+    }
+
+    #game-screen {
+        height: 300px;
+        font-size: 18px;
+    }
+
+    .d-pad, .buttons {
+        transform: scale(0.9);
+    }
+
+    .tv-screen {
+        max-width: 560px;
+        border-width: 15px;
+    }
+
+    .fake-controller {
+        width: 50px; /* Even smaller on medium screens */
+        right: 5px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 24px;
+    }
+
+    #game-screen {
+        height: 250px;
+        font-size: 16px;
+    }
+
+    .controller {
+        width: 100%;
+        max-width: 300px;
+    }
+
+    .controller-content {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .d-pad, .buttons {
+        transform: scale(0.8);
+    }
+
+    .tv-screen {
+        max-width: 360px;
+        border-width: 10px;
+    }
+
+    .fake-controller {
+        width: 40px; /* Smallest size on mobile screens */
+        right: 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .controller {
+        max-width: 280px;
+    }
+
+    .d-pad, .buttons {
+        transform: scale(0.7);
+    }
+}
+
+.fake-controller {
+    position: fixed;
+    z-index: 999;
+    transition: all 0.3s ease;
+    width: 100px; /* Set a fixed width */
+    transform: rotate(-15deg); /* Add a slight tilt */
+    margin-top: 40px;
+}
+
+.fake-controller-container {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.fake-controller:hover {
+    transform: rotate(-15deg) scale(1.1);
+}
+
+.fake-controller img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+}
+
+/* Add these new styles */
+.instruction-paper {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f4e4bc;
+    border: 2px solid #d4c4a0;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    transform: rotate(-1deg);
+    z-index: 10;
+    max-width: 120px;
+    font-size: 14px;
+}
+
+.instruction-paper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #f4e4bc 0%, #fff8e8 50%, #f4e4bc 100%);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.instruction-paper::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    left: 10px;
+    right: 10px;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: rotate(1deg);
+    z-index: -1;
+}
+
+.instruction-paper:hover {
+    transform: rotate(-1deg) translateY(-2px);
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    background-color: #f4e4bc; /* Light yellow paper color */
+    margin: 15% auto;
+    padding: 30px;
+    border: 1px solid #d4c4a0;
+    width: 80%;
+    max-width: 500px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    font-family: 'Courier New', Courier, monospace; /* Typewriter-style font */
+    position: relative;
+    transform: rotate(-1deg); /* Slight tilt for a more natural look */
+}
+
+.popup-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right, #f4e4bc 0%, #fff8e8 50%, #f4e4bc 100%);
+    z-index: -1;
+    opacity: 0.7;
+}
+
+.popup-content h2 {
+    margin-top: 0;
+    color: #333;
+    font-size: 24px;
+    text-align: center;
+    text-decoration: underline;
+}
+
+.popup-content ol {
+    padding-left: 30px;
+}
+
+.popup-content li {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+#close-popup {
+    background-color: #d4c4a0;
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    position: absolute;
+    bottom: -20px;
+    right: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#close-popup:hover {
+    background-color: #c4b490;
+}
+
+/* Add some tape-like decorations */
+.popup-content::after {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    right: 20px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: rotate(1deg);
+    z-index: -1;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .popup-content {
+        width: 90%;
+        margin: 20% auto;
+        padding: 20px;
+    }
+    
+    .popup-content h2 {
+        font-size: 20px;
+    }
+    
+    .popup-content li {
+        font-size: 14px;
+    }
+}
+
+.d-pad-button:focus,
+.action-button:focus,
+#close-popup:focus,
+.instruction-paper:focus {
+    outline: 3px solid #4a90e2;
+    outline-offset: 2px;
+}
+
+.action-button.y { 
+    background: linear-gradient(to bottom, #e09600, #c68400); 
+    color: #000;
+}
+.action-button.b { 
+    background: linear-gradient(to bottom, #c9302c, #a92824); 
+}
+.action-button.x { 
+    background: linear-gradient(to bottom, #0275d8, #025aa5); 
+}
+.action-button.a { 
+    background: linear-gradient(to bottom, #5cb85c, #4cae4c); 
+}
+
+/* Add these new styles */
+.start-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 10;
+}
+
+.start-screen h1 {
+    font-size: 48px;
+    color: #4CAF50;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-bottom: 20px;
+}
+
+.start-screen .snake-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+}
+
+.start-screen .instructions {
+    font-size: 24px;
+    color: white;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.start-screen .press-a {
+    font-size: 32px;
+    color: #FFC107;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
