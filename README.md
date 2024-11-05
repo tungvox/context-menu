@@ -1,5 +1,9 @@
 # Snake Game
 
+[Play the Demo](https://context-menu-olive.vercel.app/)
+
+![Snake Game Screenshot](screenshot.PNG)
+
 This is a simple Snake game implemented using HTML, CSS, and JavaScript.
 
 ## How to Run the Application
